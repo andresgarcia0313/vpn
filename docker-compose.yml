@@ -9,7 +9,7 @@ services:
       - NET_ADMIN
       - SYS_MODULE
     environment:
-      - WG_HOST=vpn.ingeniumcodex.com
+      - WG_HOST=${WG_HOST}
       - PASSWORD_HASH=${PASSWORD_HASH}
       - PORT=51821
       - WG_PORT=51820
