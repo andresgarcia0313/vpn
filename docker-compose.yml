@@ -1,0 +1,25 @@
+#https://chatgpt.com/c/6844e697-d014-8008-9133-68ea6d84c41b?model=gpt-4o
+#Genera el password hash con:sudo apt install apache2-utils && htpasswd -nbB admin 12345
+#Si tu contraseña tiene $ agregale doble simbolo
+services:
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy:latest
+    container_name: wg-easy
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    environment:
+      - WG_HOST=vpn.ingeniumcodex.com
+      - PASSWORD_HASH=${PASSWORD_HASH}
+      - PORT=51821
+      - WG_PORT=51820
+      - TZ=America/Bogota
+    volumes:
+      - ./wireguard-data:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv4.ip_forward=1
+    restart: unless-stopped
